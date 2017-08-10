@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.models.Adder;
+import com.example.demo.models.Whisperer;
+import com.example.demo.models.Yeller;
+
+
 @Controller
 @RequestMapping({"/", "/HelloWorld"})
 public class HelloWorldController {
@@ -23,17 +28,39 @@ public class HelloWorldController {
 		return "helloworld/index";
 	}
 	
-	@GetMapping("message")
+	@GetMapping("message") //URL to which the form submits
 	public ModelAndView message(@RequestParam(required=false, defaultValue="«silence»") String message) {
+		
+		Yeller y1 = new Yeller(message);
+		String r1 = y1.yell();
+				
+		//This is the path src/main/resources/templates/helloworld/message.html
 		ModelAndView mv = new ModelAndView("helloworld/message");
 		mv.addObject("title", title);
-		mv.addObject("message", message);
+		mv.addObject("message", r1);
+		return mv;
+	}
+	
+	@GetMapping("whisper")
+	public ModelAndView whisperer(@RequestParam(required=false, defaultValue="«shhhhhh»") String message) {
+		
+		Whisperer w1 = new Whisperer(message);
+		String s1 = w1.whisper();
+
+		
+		ModelAndView mv = new ModelAndView("helloworld/whisper");
+		mv.addObject("title", title);
+		mv.addObject("message", s1);
 		return mv;
 	}
 	 
 	@PostMapping("adder")
 	public String addTwoNumbers(@RequestParam(name="left") int first, @RequestParam(name="right") double second, Model model) {
-		model.addAttribute("sum", first + second);
+		
+		Adder adder = new Adder(first, second);
+		double result = adder.calculate();
+		
+		model.addAttribute("sum", result);
 		return "helloworld/sum-result";
 	}
 	
