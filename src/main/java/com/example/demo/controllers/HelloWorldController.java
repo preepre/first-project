@@ -28,6 +28,26 @@ public class HelloWorldController {
 		return "helloworld/index";
 	}
 	
+	@GetMapping("say-something")
+	public String makeAChoice(String speechChoice, String message, Model selectedAction) {
+		//if speechChoice is yell
+		if (speechChoice.equals("yell")) {
+			//make message loud		
+			Yeller wooGal = new Yeller(message);
+			String loud = wooGal.yell();
+			selectedAction.addAttribute("output", loud);
+			
+		} else { //otherwise
+			//make message whisper
+			Whisperer shGal = new Whisperer(message);
+			String quiet = shGal.whisper();
+			selectedAction.addAttribute("output", quiet); //output will be in a mustache
+			
+		}
+		
+		return "helloworld/mixed-messages";
+	}
+	
 	@GetMapping("message") //URL to which the form submits
 	public ModelAndView message(@RequestParam(required=false, defaultValue="«silence»") String message) {
 		
