@@ -13,13 +13,12 @@ public class Exponent {
 
 	public double calculate() {
 		
-		double n = 0.0;
+		return Math.pow(secret1, secret2);
 		
-		for (int i=0; i<= secret2; i++) {
-			n = secret1*secret1;
-		}
+//		for (int i=0; i<= secret2; i++) {
+//			double n = secret1*secret1;
+//		}
 			
-		return n;
 	}
 
 }
