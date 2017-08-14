@@ -12,7 +12,7 @@ public class ModuloDivider {
 	}
 
 	public double calculate() {
-		return secret1 % secret2;
+		return (secret1 % secret2);
 	}
 
 
